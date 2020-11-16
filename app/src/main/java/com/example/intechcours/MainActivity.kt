@@ -14,9 +14,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val disposable = CompositeDisposable();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,20 +32,27 @@ class MainActivity : AppCompatActivity() {
 
         textView.setText("ffff");
 
+        disposable.add(ApiService.searchMovie("pirate")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+            }
+            .subscribe ({
+                runOnUiThread {
+                    textView.text = it.results[0].title;
+                }
+            },Throwable::printStackTrace)
+        )
+
+
         btn_click_me.setOnClickListener {
             AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setTitle("Confirmation")
                 .setMessage("Picture ?")
                 .setPositiveButton("Yes") { _: DialogInterface, i: Int ->
-                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    try {
-                        startActivityForResult(takePictureIntent, 1)
-                    } catch (e: ActivityNotFoundException) {
-                        // display error state to the user
-                    }
-
-
+                    val intent = Intent(applicationContext, SecondActivity::class.java)
+                    startActivity(intent)
                 }
                 .setNegativeButton("No", null)
                 .create()
@@ -52,7 +65,13 @@ class MainActivity : AppCompatActivity() {
         bottonBar.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.page_1 -> {
-                    Log.i("0", "First")
+                    Log.i("0", "First");
+                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try {
+                        startActivityForResult(takePictureIntent, 1)
+                    } catch (e: ActivityNotFoundException) {
+                        // display error state to the user
+                    }
                     true
                 }
                 R.id.page_2 -> {
