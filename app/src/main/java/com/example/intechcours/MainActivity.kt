@@ -1,19 +1,15 @@
 package com.example.intechcours
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.squareup.picasso.Picasso
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.io.InputStream
-import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,9 +22,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val btn_click_me = findViewById<Button>(R.id.button)
-        val textView: TextView = findViewById(R.id.textView)
-
-        textView.setText("ffff");
 
         btn_click_me.setOnClickListener {
           this.OnSearch()
@@ -36,9 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun OnSearch(){
-        val textView: TextView = findViewById(R.id.textView);
         val editText: EditText = findViewById(R.id.searchMovie);
-        val myImageView: ImageView = findViewById(R.id.imageView);
 
         disposable.add(ApiService.searchMovie(editText.text.toString())
             .subscribeOn(Schedulers.io())
@@ -47,16 +38,13 @@ class MainActivity : AppCompatActivity() {
             }
             .subscribe ({
                 listMovie.clear();
-                listMovie.addAll(it.results)
-                runOnUiThread {
-                     try {
-                         val url = "https://image.tmdb.org/t/p/w200" + listMovie[0].poster_path;
-                         Log.i("e",url)
-                         Picasso.get().load(url).into(myImageView)
-                    } catch (e: Exception) {
-                    }
-                    textView.text = listMovie[0].title;
-                }
+                listMovie.addAll(it.results);
+                val adapter = AdapterMovie(listMovie);
+                val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
+                recyclerView.setLayoutManager( LinearLayoutManager(this));
+                recyclerView.setAdapter(adapter);
+//                recyclerView.getLayoutManager()?.setMeasurementCacheEnabled(false);
+
             },Throwable::printStackTrace)
         )
     }
