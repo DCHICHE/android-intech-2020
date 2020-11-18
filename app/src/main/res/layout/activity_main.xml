@@ -8,14 +8,12 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/searchMovie"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:text="@string/test"
-        />
+        android:hint="Search"
+        android:inputType="text"/>
 
     <Button
         android:id="@+id/button"
@@ -26,16 +24,19 @@
         android:layout_gravity="center"
         android:text="click" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:menu="@menu/bottom_bar" />
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:text="@string/test" />
 
     <ImageView
-        android:id="@+id/thumbTake"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/avatars" />
+
 
 </LinearLayout>
