@@ -4,4 +4,6 @@
     <string name="second">DIO</string>
     <string name="text_page_2">A</string>
     <string name="text_page_1">B</string>
+    <string name="camera_button_txt">Camera</string>
+    <string name="main_button_txt">Accueil</string>
 </resources>
