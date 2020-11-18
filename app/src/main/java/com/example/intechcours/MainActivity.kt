@@ -1,6 +1,8 @@
 package com.example.intechcours
 
+import android.app.FragmentManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
 
     private val disposable = CompositeDisposable();
     val listMovie = arrayListOf<Movie>();
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             .subscribe ({
                 listMovie.clear();
                 listMovie.addAll(it.results);
-                val adapter = AdapterMovie(listMovie);
+                val adapter = AdapterMovie(listMovie,this);
                 val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
                 recyclerView.setLayoutManager( LinearLayoutManager(this));
                 recyclerView.setAdapter(adapter);
@@ -47,5 +49,9 @@ class MainActivity : AppCompatActivity() {
 
             },Throwable::printStackTrace)
         )
+    }
+
+    override fun onMovieClick(position: Int) {
+        Log.i("titleMovie",listMovie[position].title)
     }
 }

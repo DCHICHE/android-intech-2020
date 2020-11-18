@@ -6,11 +6,10 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        >
+        android:layout_marginBottom="40dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -19,9 +18,22 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
+            android:id="@+id/resumeMovie"
+            android:layout_width="335dp"
+            android:layout_height="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"></TextView>
+
+        <TextView
             android:id="@+id/movieTitle"
-            android:layout_width="166dp"
-            android:layout_height="wrap_content"></TextView>
-    </LinearLayout>
+            android:layout_width="333dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            tools:layout_editor_absoluteY="0dp"></TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
