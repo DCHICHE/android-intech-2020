@@ -19,6 +19,7 @@ import io.reactivex.schedulers.Schedulers
 class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
 
     private val disposable = CompositeDisposable();
+    val history = arrayListOf<Movie>();
     val listMovie = arrayListOf<Movie>();
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,31 +36,40 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         btn_click_me.setOnClickListener {
           this.OnSearch()
         }
+        openHistory();
     }
 
     fun OnSearch(){
         val editText: EditText = findViewById(R.id.searchMovie);
-
-        disposable.add(ApiService.searchMovie(editText.text.toString())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Log.i("","");
-            }
-            .subscribe ({
-                listMovie.clear();
-                listMovie.addAll(it.results);
-                val adapter = AdapterMovie(listMovie,this);
-                val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
-                recyclerView.setLayoutManager( LinearLayoutManager(this));
-                recyclerView.setAdapter(adapter);
+        if (editText.text.toString().isEmpty()) {
+            openHistory();
+        } else {
+            disposable.add(ApiService.searchMovie(editText.text.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
+                    Log.i("","");
+                }
+                .subscribe ({
+                    listMovie.clear();
+                    listMovie.addAll(it.results);
+                    val adapter = AdapterMovie(listMovie,this);
+                    val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
+                    recyclerView.setLayoutManager( LinearLayoutManager(this));
+                    recyclerView.setAdapter(adapter);
 //                recyclerView.getLayoutManager()?.setMeasurementCacheEnabled(false);
-            },Throwable::printStackTrace)
-        );
+                },Throwable::printStackTrace)
+            );
+        }
+    }
 
+    fun openHistory() {
+        val adapter = AdapterMovie(history,this);
+        val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
     }
 
     override fun onMovieClick(position: Int) {
+        history.add(0, listMovie[position]);
         Log.i("titleMovie",listMovie[position].title)
     }
 //            },Throwable::printStackTrace)
