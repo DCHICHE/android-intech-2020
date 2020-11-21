@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.FragmentTransaction
@@ -31,14 +30,23 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
 
         fragmentTransaction.add(R.id.bottom_bar, BottomBar());
         fragmentTransaction.commit();
+
+        val btn_click_me = findViewById<Button>(R.id.button)
         btn_click_me.setOnClickListener {
           this.OnSearch()
         }
     }
+
     fun OnSearch(){
         val editText: EditText = findViewById(R.id.searchMovie);
 
         disposable.add(ApiService.searchMovie(editText.text.toString())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Log.i("","");
+            }
+            .subscribe ({
                 listMovie.clear();
                 listMovie.addAll(it.results);
                 val adapter = AdapterMovie(listMovie,this);
@@ -46,12 +54,14 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
                 recyclerView.setLayoutManager( LinearLayoutManager(this));
                 recyclerView.setAdapter(adapter);
 //                recyclerView.getLayoutManager()?.setMeasurementCacheEnabled(false);
+            },Throwable::printStackTrace)
+        );
 
     }
 
     override fun onMovieClick(position: Int) {
         Log.i("titleMovie",listMovie[position].title)
-//                }
+    }
 //            },Throwable::printStackTrace)
 //        )
 //
