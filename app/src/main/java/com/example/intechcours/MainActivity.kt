@@ -1,6 +1,7 @@
 package com.example.intechcours
 
 import android.app.FragmentManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
     fun OnSearch(){
         val editText: EditText = findViewById(R.id.searchMovie);
 
-        disposable.add(ApiService.searchMovie(editText.text.toString())
+        disposable.add(ApiService.searchMovie(editText.text.toString(),"")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError {
@@ -45,13 +47,14 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
                 val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
                 recyclerView.setLayoutManager( LinearLayoutManager(this));
                 recyclerView.setAdapter(adapter);
-//                recyclerView.getLayoutManager()?.setMeasurementCacheEnabled(false);
-
             },Throwable::printStackTrace)
         )
     }
 
     override fun onMovieClick(position: Int) {
-        Log.i("titleMovie",listMovie[position].title)
+        val intent = Intent(this, MovieDetailsActivity::class.java).apply {
+            putExtra("Movie", listMovie[position])
+        }
+        startActivity(intent)
     }
 }
