@@ -1,16 +1,15 @@
 package com.example.intechcours
 
-import android.app.FragmentManager
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.fragment.app.FragmentTransaction
+import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -18,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
 
+    private var prefs: SharedPreferences? = getPreferences(MODE_PRIVATE)
     private val disposable = CompositeDisposable();
     val history = arrayListOf<Movie>();
     val listMovie = arrayListOf<Movie>();
@@ -36,6 +36,12 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         btn_click_me.setOnClickListener {
           this.OnSearch()
         }
+
+        val gson = Gson()
+        val json: String? = prefs?.getString("history", "")
+        if (json != null && json.isNotEmpty()) {
+            history.addAll(gson.fromJson(json, arrayListOf<Movie>()::class.java));
+        }
         openHistory();
     }
 
@@ -48,29 +54,40 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {
-                    Log.i("","");
+                    Log.i("", "");
                 }
-                .subscribe ({
+                .subscribe({
                     listMovie.clear();
                     listMovie.addAll(it.results);
-                    val adapter = AdapterMovie(listMovie,this);
+                    val adapter = AdapterMovie(listMovie, this);
                     val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
-                    recyclerView.setLayoutManager( LinearLayoutManager(this));
+                    recyclerView.setLayoutManager(LinearLayoutManager(this));
                     recyclerView.setAdapter(adapter);
 //                recyclerView.getLayoutManager()?.setMeasurementCacheEnabled(false);
-                },Throwable::printStackTrace)
+                }, Throwable::printStackTrace)
             );
         }
     }
 
     fun openHistory() {
-        val adapter = AdapterMovie(history,this);
+        val adapter = AdapterMovie(history, this);
         val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
+        recyclerView.setLayoutManager(LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    fun saveHistory() {
+        val prefsEditor: SharedPreferences.Editor = prefs!!.edit()
+        val gson = Gson()
+        val json = gson.toJson(history)
+        prefsEditor.putString("history", json)
+        prefsEditor.commit()
     }
 
     override fun onMovieClick(position: Int) {
         history.add(0, listMovie[position]);
-        Log.i("titleMovie",listMovie[position].title)
+        saveHistory()
+        Log.i("titleMovie", listMovie[position].title)
     }
 //            },Throwable::printStackTrace)
 //        )
