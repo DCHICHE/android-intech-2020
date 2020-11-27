@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         val json: String? = prefs.getString("history", "")
         if (json != null && json.isNotEmpty()) {
             val myType = object : TypeToken<ArrayList<Movie>>() {}.type
-            history.addAll( gson.fromJson(json, myType) );
+            history.addAll(gson.fromJson(json, myType));
         }
         openHistory();
     }
@@ -59,7 +59,10 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
             openHistory();
         } else {
 
-            disposable.add(ApiService.searchMovie(editText.text.toString(), resources.configuration.locale.toLanguageTag())
+            disposable.add(ApiService.searchMovie(
+                editText.text.toString(),
+                resources.configuration.locale.toLanguageTag()
+            )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {
@@ -100,8 +103,10 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
             putExtra("Movie", listMovie[position])
         }
         startActivity(intent)
-        history.add(0, listMovie[position]);
-        saveHistory()
+        if (history.isEmpty() || history[0].id != listMovie[position].id) {
+            history.add(0, listMovie[position])
+            saveHistory()
+        }
         Log.i("titleMovie", listMovie[position].title)
     }
 
