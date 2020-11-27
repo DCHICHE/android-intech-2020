@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -45,10 +46,13 @@ class MovieDetailsActivity : AppCompatActivity() {
         detaiMovieFragment.arguments = movieBundle;
         similarMovieFragment.arguments = movieBundle;
 
-        fragmentManager
-            .beginTransaction()
-            .add(R.id.detailMovieFragment, detaiMovieFragment)
-            .commit();
+        val fragmentTransact = fragmentManager.beginTransaction()
+
+        fragmentTransact.add(R.id.detailMovieFragment, detaiMovieFragment);
+        fragmentTransact.add(R.id.bottom_bar, BottomBar());
+
+        fragmentTransact.commit()
+
 
         val navigationDetailsMovie = findViewById<BottomNavigationView>(R.id.navigation_details_movie);
         navigationDetailsMovie.setOnNavigationItemSelectedListener { item ->

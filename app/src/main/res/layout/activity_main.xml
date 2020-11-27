@@ -42,8 +42,7 @@
         android:layout_below="@+id/button"
         android:layout_above="@+id/bottom_bar"/>
 
-    <fragment
-        android:name="com.example.intechcours.BottomBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

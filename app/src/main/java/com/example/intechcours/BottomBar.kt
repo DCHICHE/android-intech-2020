@@ -20,7 +20,15 @@ class BottomBar : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val btn_camera = container?.findViewById<Button>(R.id.camera_activity_btn);
+
+
+        return inflater.inflate(R.layout.fragment_bottom_bar, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val btn_camera = view.findViewById<Button>(R.id.camera_activity_btn);
         btn_camera?.setOnClickListener {
             Log.i("debug-test", "go to camera");
 
@@ -28,14 +36,12 @@ class BottomBar : Fragment() {
             startActivity(intent);
         }
 
-        val btn_main = container?.findViewById<Button>(R.id.main_activity_btn);
+        val btn_main = view.findViewById<Button>(R.id.main_activity_btn);
         btn_main?.setOnClickListener {
             Log.i("debug-test", "go to main");
             val intent = Intent(this@BottomBar.context, MainActivity::class.java);
             startActivity(intent);
         }
-
-        return inflater.inflate(R.layout.fragment_bottom_bar, container, false)
     }
 
 }

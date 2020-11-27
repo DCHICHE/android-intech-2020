@@ -21,8 +21,7 @@
         android:layout_alignParentRight="true"
         android:text="Button"/>
 
-    <fragment
-        android:name="com.example.intechcours.BottomBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
