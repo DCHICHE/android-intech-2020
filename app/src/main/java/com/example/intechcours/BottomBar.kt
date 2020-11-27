@@ -13,13 +13,6 @@ class BottomBar : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-//
-//        btn_Camera.setOnClickListener {
-//            val intent = Intent(this, CameraActivity::class.java)
-//            startActivity(intent)
-//        }
     }
 
     override fun onCreateView(

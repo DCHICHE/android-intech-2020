@@ -2,7 +2,10 @@ package com.example.intechcours
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         val fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.add(R.id.bottom_bar, BottomBar());
+        fragmentTransaction.add(R.id.languageChange, LanguageFragment());
         fragmentTransaction.commit();
 
         val btn_click_me = findViewById<Button>(R.id.button)
@@ -54,7 +58,8 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         if (editText.text.toString().isEmpty()) {
             openHistory();
         } else {
-            disposable.add(ApiService.searchMovie(editText.text.toString(), "")
+
+            disposable.add(ApiService.searchMovie(editText.text.toString(), resources.configuration.locale.toLanguageTag())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {

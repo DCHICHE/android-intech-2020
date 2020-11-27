@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">IntechClass</string>
+    <string name="app_name">MovieZy</string>
     <string name="test">USA</string>
     <string name="second">DIO</string>
     <string name="text_page_2">Take Picture</string>
     <string name="text_page_1">B</string>
     <string name="camera_button_txt">Camera</string>
     <string name="main_button_txt">Main</string>
-
+    <string name="details_movie">Details</string>
+    <string name="similar_movie">Similar Movie</string>
+    <string name="like_button">Like</string>
 </resources>
