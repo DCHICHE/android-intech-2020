@@ -1,10 +1,12 @@
 package com.example.intechcours
 
+import android.content.Context
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.squareup.picasso.Picasso
+import com.google.android.material.internal.ContextUtils.getActivity
+
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -14,33 +16,35 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         val movieSerializable = intent.getSerializableExtra("Movie");
         val movie = movieSerializable as Movie;
-        val bundle = Bundle();
-        bundle.putSerializable("Movie", movieSerializable);
-
-        val poster = findViewById<ImageView>(R.id.imageViewDetail);
-        val genres = findViewById<TextView>(R.id.genre);
-        val overview = findViewById<TextView>(R.id.overviewDetail);
-        val movieTitle = findViewById<TextView>(R.id.movieTitle);
-
-        try {
-            val url = "https://image.tmdb.org/t/p/w500" + movie.poster_path;
-            Picasso.get().load(url).into(poster)
-        } catch (e: Exception) {
-        }
-
-        genres?.text = movie.genre_ids.joinToString { "," };
-        overview?.text  = movie.overview
-        movieTitle?.text = movie.title;
+        val te = Bundle();
+        te.putSerializable("Movie", movieSerializable);
 
         val fragmentManager = supportFragmentManager;
-        val fragmentTransaction = fragmentManager.beginTransaction();
+        val mainFragment = DetailMovieActivityFragment()
+        mainFragment.arguments = te;
 
-        val mainFragment = DetailMovieActivityFragment();
-        mainFragment.arguments = bundle;
+        fragmentManager
+            .beginTransaction()
+            .add(R.id.detailMovieFragment, mainFragment)
+            .commit();
 
-        fragmentTransaction.add(R.id.detailMovieFragment, DetailMovieActivityFragment());
-        fragmentTransaction.commit();
+
+//        val poster = findViewById<ImageView>(R.id.imageViewDetail);
+//        val genres = findViewById<TextView>(R.id.genre);
+//        val overview = findViewById<TextView>(R.id.overviewDetail);
+//        val movieTitle = findViewById<TextView>(R.id.movieTitle);
+//
+//        try {
+//            val url = "https://image.tmdb.org/t/p/w500" + movie.poster_path;
+//            Picasso.get().load(url).into(poster)
+//        } catch (e: Exception) {
+//        }
+//
+//        genres?.text = movie.genre_ids.joinToString { "," };
+//        overview?.text  = movie.overview
+//        movieTitle?.text = movie.title;
 
 
     }
+
 }
