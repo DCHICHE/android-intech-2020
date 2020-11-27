@@ -22,22 +22,6 @@ class CameraActivity : AppCompatActivity() {
         fragmentTransaction.add(R.id.bottom_bar, BottomBar());
         fragmentTransaction.commit();
 
-        val button = findViewById<Button>(R.id.new_photo)
-        button.setOnClickListener {
-//            dispatchTakePictureIntent()
-            AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setTitle("Confirmation")
-                .setMessage("Picture ?")
-                .setPositiveButton("Yes") { _: DialogInterface, i: Int ->
-                    val intent = Intent(applicationContext, SecondActivity::class.java)
-                    startActivity(intent)
-                }
-                .setNegativeButton("No", null)
-                .create()
-                .show()
-        }
-
         val btn_newPhoto = findViewById<Button>(R.id.new_photo);
         btn_newPhoto.setOnClickListener {
             try {
