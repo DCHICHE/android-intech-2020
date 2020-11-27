@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">MovieZy</string>
-    <string name="test">FR</string>
-    <string name="second">DIO</string>
-    <string name="text_page_2">A</string>
-    <string name="text_page_1">B</string>
+    <string name="description_text">Votre Film ! </string>
     <string name="camera_button_txt">Camera</string>
     <string name="main_button_txt">Accueil</string>
     <string name="details_movie">Détails</string>
     <string name="similar_movie">Films Similaire</string>
     <string name="like_button">Vous avez aimé :</string>
-    <string name="unlike_button">Vous avez enlever votre j\'aime de :</string>
+    <string name="unlike_button">Vous avez enlevé votre j\'aime de :</string>
 </resources>
