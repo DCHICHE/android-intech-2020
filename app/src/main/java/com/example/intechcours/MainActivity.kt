@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         if (editText.text.toString().isEmpty()) {
             openHistory();
         } else {
-            disposable.add(ApiService.searchMovie(editText.text.toString(), "")
+
+            disposable.add(ApiService.searchMovie(editText.text.toString(), resources.configuration.locale.toLanguageTag())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {

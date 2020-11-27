@@ -12,6 +12,6 @@ interface IApiService {
     fun searchMovie(@Query("api_key") apiKey : String,@Query("query") titleMovie : String,@Query("language") language: String): Observable<ResponseAPI>
 
     @GET("movie/{movie_id}/similar")
-    fun getSimilarMovie(@Path("movie_id") movieId : Int,@Query("api_key") apiKey : String): Observable<ResponseAPI>
+    fun getSimilarMovie(@Path("movie_id") movieId : Int,@Query("api_key") apiKey : String,@Query("language") language: String): Observable<ResponseAPI>
 
 }

@@ -11,7 +11,7 @@ object ApiService {
         return apiService.searchMovie(BuildConfig.API_KEY,title,language)
     }
 
-    fun getSimilarMovie(movieId : Int) : Observable<ResponseAPI>{
-        return apiService.getSimilarMovie(movieId,BuildConfig.API_KEY)
+    fun getSimilarMovie(movieId : Int,language: String) : Observable<ResponseAPI>{
+        return apiService.getSimilarMovie(movieId,BuildConfig.API_KEY,language)
     }
 }

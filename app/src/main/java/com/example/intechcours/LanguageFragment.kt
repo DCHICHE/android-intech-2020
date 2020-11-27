@@ -37,7 +37,7 @@ class LanguageFragment : Fragment() {
             val res: Resources = resources
             val dm: DisplayMetrics = res.displayMetrics
             val conf: Configuration = res.configuration
-            conf.locale = myLocale
+            conf.setLocale(myLocale)
             res.updateConfiguration(conf, dm)
             val refresh = Intent(this.context, MainActivity::class.java);
             this.activity?.finish();
@@ -49,7 +49,7 @@ class LanguageFragment : Fragment() {
             val res: Resources = resources
             val dm: DisplayMetrics = res.displayMetrics
             val conf: Configuration = res.configuration
-            conf.locale = myLocale
+            conf.setLocale(myLocale)
             res.updateConfiguration(conf, dm)
             val refresh = Intent(this.context, MainActivity::class.java);
             this.activity?.finish();

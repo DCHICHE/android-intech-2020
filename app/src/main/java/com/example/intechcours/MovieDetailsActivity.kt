@@ -23,9 +23,6 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
         setContentView(R.layout.detail_movie_activity)
 
         val movieSerializable = intent.getSerializableExtra("Movie");
@@ -33,7 +30,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         val movieBundle = Bundle();
         movieBundle.putSerializable("Movie", movieSerializable);
 
-        disposable.add(ApiService.getSimilarMovie(movie.id)
+        disposable.add(ApiService.getSimilarMovie(movie.id,resources.configuration.locale.toLanguageTag())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError {
