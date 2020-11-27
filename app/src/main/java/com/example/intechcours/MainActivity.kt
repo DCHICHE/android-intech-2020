@@ -83,6 +83,8 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         val recyclerView = findViewById<View>(R.id.movieList) as RecyclerView
         recyclerView.setLayoutManager(LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        listMovie.clear()
+        listMovie.addAll(history)
     }
 
     fun saveHistory() {
