@@ -19,11 +19,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detailMovieFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navigation_details_movie" />
+        app:layout_constraintTop_toBottomOf="@+id/navigation_details_movie"
+        app:layout_constraintVertical_bias="0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_bar"
