@@ -1,14 +1,24 @@
 package com.example.intechcours
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ContextUtils.getActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
 class MovieDetailsActivity : AppCompatActivity() {
+
+    private val disposable = CompositeDisposable();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,35 +26,46 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         val movieSerializable = intent.getSerializableExtra("Movie");
         val movie = movieSerializable as Movie;
-        val te = Bundle();
-        te.putSerializable("Movie", movieSerializable);
+        val movieBundle = Bundle();
+        movieBundle.putSerializable("Movie", movieSerializable);
+
+        disposable.add(ApiService.getSimilarMovie(movie.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+            }
+            .subscribe({
+                movieBundle.putSerializable("SimilarMovie",it.results)
+            }, Throwable::printStackTrace))
 
         val fragmentManager = supportFragmentManager;
-        val mainFragment = DetailMovieActivityFragment()
-        mainFragment.arguments = te;
+        val detaiMovieFragment = DetailMovieActivityFragment()
+        val similarMovieFragment = SimilarMovieFragment()
+        detaiMovieFragment.arguments = movieBundle;
+        similarMovieFragment.arguments = movieBundle;
 
         fragmentManager
             .beginTransaction()
-            .add(R.id.detailMovieFragment, mainFragment)
+            .add(R.id.detailMovieFragment, detaiMovieFragment)
             .commit();
 
+        val navigationDetailsMovie = findViewById<BottomNavigationView>(R.id.navigation_details_movie);
 
-//        val poster = findViewById<ImageView>(R.id.imageViewDetail);
-//        val genres = findViewById<TextView>(R.id.genre);
-//        val overview = findViewById<TextView>(R.id.overviewDetail);
-//        val movieTitle = findViewById<TextView>(R.id.movieTitle);
-//
-//        try {
-//            val url = "https://image.tmdb.org/t/p/w500" + movie.poster_path;
-//            Picasso.get().load(url).into(poster)
-//        } catch (e: Exception) {
-//        }
-//
-//        genres?.text = movie.genre_ids.joinToString { "," };
-//        overview?.text  = movie.overview
-//        movieTitle?.text = movie.title;
-
+        navigationDetailsMovie.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.detailsMovie -> {
+                    fragmentManager.beginTransaction().replace(R.id.detailMovieFragment, detaiMovieFragment).commit()
+                    true
+                }
+                R.id.similarMovie -> {
+                    fragmentManager.beginTransaction().replace(R.id.detailMovieFragment, similarMovieFragment).commit()
+                    true
+                }
+                else -> false
+            }
+        }
 
     }
+
 
 }
