@@ -60,7 +60,6 @@ class DetailMovieActivityFragment : Fragment() {
         val likeMovies = prefs.getStringSet("likeMovies", HashSet<String>())
 
         val poster = view.findViewById<ImageView>(R.id.imageViewDetail)
-        val genres = view.findViewById<TextView>(R.id.genre)
         val overview = view.findViewById<TextView>(R.id.overviewDetail)
         val movieTitle = view.findViewById<TextView>(R.id.movieTitle)
         val likeButton = view.findViewById<ImageView>(R.id.like_button)
@@ -81,7 +80,6 @@ class DetailMovieActivityFragment : Fragment() {
         } catch (e: Exception) {
         }
 
-        genres?.text = actualMovie.genre_ids.joinToString(",")
         overview?.text = actualMovie.overview;
         movieTitle?.text = actualMovie.title;
     }
