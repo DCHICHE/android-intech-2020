@@ -20,6 +20,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String","BASE_URL",BASE_URL
             buildConfigField "String","API_KEY",API_KEY

@@ -7,4 +7,6 @@
     <string name="similar_movie">Similar Movie</string>
     <string name="like_button">You liked the movie : </string>
     <string name="unlike_button">You removed your like of the movie :</string>
+    <string name="search">Search</string>
+    <string name="search_placeholder">Tap your search</string>
 </resources>

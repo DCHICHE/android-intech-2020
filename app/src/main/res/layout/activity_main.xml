@@ -12,7 +12,7 @@
         android:id="@+id/searchMovie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search"
+        android:hint="@string/search_placeholder"
         android:inputType="text"/>
 
     <Button
@@ -22,7 +22,7 @@
         android:layout_below="@+id/searchMovie"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:text="click"/>
+        android:text="@string/search"/>
 
     <RelativeLayout
         android:id="@+id/languageChange"

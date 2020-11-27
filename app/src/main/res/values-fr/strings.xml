@@ -7,4 +7,6 @@
     <string name="similar_movie">Films Similaire</string>
     <string name="like_button">Vous avez aimé :</string>
     <string name="unlike_button">Vous avez enlevé votre j\'aime de :</string>
+    <string name="search">Rechercher</string>
+    <string name="search_placeholder">Tapez votre recherche</string>
 </resources>
