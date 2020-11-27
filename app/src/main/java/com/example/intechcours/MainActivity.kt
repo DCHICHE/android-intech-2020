@@ -1,6 +1,5 @@
 package com.example.intechcours
 
-import android.app.FragmentManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
 
-    private var prefs: SharedPreferences? = getPreferences(MODE_PRIVATE)
+    private lateinit var prefs: SharedPreferences;
     private val disposable = CompositeDisposable();
     val history = arrayListOf<Movie>();
     val listMovie = arrayListOf<Movie>();
@@ -28,6 +27,7 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.prefs = getSharedPreferences("history", MODE_PRIVATE)
 
         val fragmentManager = supportFragmentManager;
         val fragmentTransaction = fragmentManager.beginTransaction();
@@ -41,9 +41,10 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         }
 
         val gson = Gson()
-        val json: String? = prefs?.getString("history", "")
+        val json: String? = prefs.getString("history", "")
         if (json != null && json.isNotEmpty()) {
-            history.addAll(gson.fromJson(json, arrayListOf<Movie>()::class.java));
+            val myType = object : TypeToken<ArrayList<Movie>>() {}.type
+            history.addAll( gson.fromJson(json, myType) );
         }
         openHistory();
     }
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
     }
 
     fun saveHistory() {
-        val prefsEditor: SharedPreferences.Editor = prefs!!.edit()
+        val prefsEditor: SharedPreferences.Editor = prefs.edit()
         val gson = Gson()
         val json = gson.toJson(history)
         prefsEditor.putString("history", json)
