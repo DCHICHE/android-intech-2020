@@ -9,4 +9,5 @@
     <string name="unlike_button">Vous avez enlevé votre j\'aime de :</string>
     <string name="search">Rechercher</string>
     <string name="search_placeholder">Tapez votre recherche</string>
+    <string name="take_picture">Prendre une photo</string>
 </resources>
