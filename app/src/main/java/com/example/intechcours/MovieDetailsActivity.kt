@@ -2,6 +2,7 @@ package com.example.intechcours
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ContextUtils.getActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +24,8 @@ import java.util.*
 class MovieDetailsActivity : AppCompatActivity() {
 
     private val disposable = CompositeDisposable();
+    private val likeMovie = arrayListOf<Int>();
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +55,6 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         fragmentTransact.add(R.id.detailMovieFragment, detaiMovieFragment);
         fragmentTransact.add(R.id.bottom_bar, BottomBar());
-
         fragmentTransact.commit()
 
 

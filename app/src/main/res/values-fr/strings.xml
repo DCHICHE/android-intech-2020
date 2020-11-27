@@ -8,5 +8,6 @@
     <string name="main_button_txt">Accueil</string>
     <string name="details_movie">Détails</string>
     <string name="similar_movie">Films Similaire</string>
-    <string name="like_button">J\'aime</string>
+    <string name="like_button">Vous avez aimé :</string>
+    <string name="unlike_button">Vous avez enlever votre j\'aime de :</string>
 </resources>
