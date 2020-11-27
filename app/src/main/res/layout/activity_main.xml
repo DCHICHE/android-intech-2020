@@ -24,6 +24,17 @@
         android:layout_gravity="center"
         android:text="click"/>
 
+    <RelativeLayout
+        android:id="@+id/languageChange"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@+id/searchMovie"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="-240dp"
+        android:layout_toStartOf="@+id/button"
+        android:layout_toEndOf="@+id/button" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieList"
         android:layout_width="match_parent"

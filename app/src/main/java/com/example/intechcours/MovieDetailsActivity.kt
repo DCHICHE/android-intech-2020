@@ -14,6 +14,7 @@ import com.google.android.material.internal.ContextUtils.getActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 
 class MovieDetailsActivity : AppCompatActivity() {
@@ -22,6 +23,9 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContentView(R.layout.detail_movie_activity)
 
         val movieSerializable = intent.getSerializableExtra("Movie");
@@ -50,7 +54,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             .commit();
 
         val navigationDetailsMovie = findViewById<BottomNavigationView>(R.id.navigation_details_movie);
-
         navigationDetailsMovie.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.detailsMovie -> {

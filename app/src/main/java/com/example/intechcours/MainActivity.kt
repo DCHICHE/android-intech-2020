@@ -1,17 +1,16 @@
 package com.example.intechcours
 
-import android.app.FragmentManager
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
+import android.util.DisplayMetrics
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.fragment.app.FragmentTransaction
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -32,6 +31,7 @@ class MainActivity : AppCompatActivity(), AdapterMovie.ClickMovieListener {
         val fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.add(R.id.bottom_bar, BottomBar());
+        fragmentTransaction.add(R.id.languageChange, LanguageFragment());
         fragmentTransaction.commit();
 
         val btn_click_me = findViewById<Button>(R.id.button)
