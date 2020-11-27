@@ -19,7 +19,7 @@
         android:layout_above="@+id/bottom_bar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="Button"/>
+        android:text="@string/take_picture"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_bar"
